@@ -1,10 +1,10 @@
 package record
 
-import "github.com/shakinm/xlsReader/helpers"
+import "github.com/luispater/xlsReader/helpers"
 
-//XF: Extended Format (E0h)
+// XF: Extended Format (E0h)
 
-var XFRecord = []byte{0xE0, 0x00} //(E0h)
+var XFRecord = []byte{0xE0, 0x00} // (E0h)
 
 /*
 

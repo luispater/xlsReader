@@ -2,10 +2,10 @@ package record
 
 import (
 	"encoding/binary"
-	"github.com/shakinm/xlsReader/helpers"
+	"github.com/luispater/xlsReader/helpers"
 )
 
-//MULBLANK: Multiple Blank Cells
+// MULBLANK: Multiple Blank Cells
 
 var MulBlankRecord = []byte{0xBE, 0x00} // (BEh)
 
@@ -34,15 +34,14 @@ type MulBlank struct {
 	colLast  [2]byte
 }
 
-
 func (r *MulBlank) GetArrayBlRecord() (blkRecords []Blank) {
 
 	for k, rgixfe := range r.rgixfe {
 		var bl Blank
 		bl.rw = r.rw
 		binary.LittleEndian.PutUint16(bl.col[:], uint16(k)+helpers.BytesToUint16(r.colFirst[:]))
-		bl.ixfe=rgixfe
-		blkRecords= append(blkRecords, bl)
+		bl.ixfe = rgixfe
+		blkRecords = append(blkRecords, bl)
 	}
 
 	return

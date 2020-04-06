@@ -1,14 +1,14 @@
 package record
 
 import (
-	"github.com/shakinm/xlsReader/helpers"
-	"github.com/shakinm/xlsReader/xls/structure"
+	"github.com/luispater/xlsReader/helpers"
+	"github.com/luispater/xlsReader/xls/structure"
 	"io"
 )
 
 // SST: Shared String Table
 
-var SSTRecord = [2]byte{0xFC, 0x00} //(FCh)
+var SSTRecord = [2]byte{0xFC, 0x00} // (FCh)
 
 /*
 The SST record contains string constants.
@@ -55,7 +55,7 @@ func abs(x int) int {
 	return x
 }
 
-func (s *SST) Read(readType string, grbit byte, prevLen int32) () {
+func (s *SST) Read(readType string, grbit byte, prevLen int32) {
 
 	defer r()
 

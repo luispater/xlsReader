@@ -1,8 +1,8 @@
 package record
 
-import "github.com/shakinm/xlsReader/helpers"
+import "github.com/luispater/xlsReader/helpers"
 
-//FORMULA: Cell Formula
+// FORMULA: Cell Formula
 
 var FormulaRecord = []byte{0x06, 0x00} // (6h)
 

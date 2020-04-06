@@ -1,13 +1,13 @@
 package record
 
 import (
-	"github.com/shakinm/xlsReader/helpers"
+	"github.com/luispater/xlsReader/helpers"
 	"reflect"
 )
 
-//BLANK: Cell Value, Blank Cell
+// BLANK: Cell Value, Blank Cell
 
-var BlankRecord = []byte{0x01, 0x02} //(201h)
+var BlankRecord = []byte{0x01, 0x02} // (201h)
 
 /*
 A BLANK record describes an empty cell. The rw field contains the 0-based row

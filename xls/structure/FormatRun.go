@@ -1,6 +1,6 @@
 package structure
 
 type FormatRun struct {
-	Ich  [2] byte
+	Ich  [2]byte
 	Ifnt FontIndex
 }

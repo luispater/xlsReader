@@ -1,8 +1,8 @@
 package record
 
-//BOF: Beginning of File
+// BOF: Beginning of File
 
-var BOFMARKS = []byte{0x09, 0x08} //(809h)
+var BOFMARKS = []byte{0x09, 0x08} // (809h)
 
 /*
 The BOF record marks the beginning of the Book stream in the BIFF file. It also

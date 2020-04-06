@@ -1,8 +1,8 @@
 package record
 
-//ARRAY: Array-Entered Formula
+// ARRAY: Array-Entered Formula
 
-var ArrayRecord = []byte{0x021, 0x02} //(221h)
+var ArrayRecord = []byte{0x021, 0x02} // (221h)
 
 /*
 An ARRAY record describes a formula that was array-entered into a range of cells.

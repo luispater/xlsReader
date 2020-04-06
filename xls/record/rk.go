@@ -1,14 +1,14 @@
 package record
 
 import (
-	"github.com/shakinm/xlsReader/helpers"
-	"github.com/shakinm/xlsReader/xls/structure"
+	"github.com/luispater/xlsReader/helpers"
+	"github.com/luispater/xlsReader/xls/structure"
 	"reflect"
 )
 
 // RK: Cell Value, RK Number
 
-var RkRecord = []byte{0x7E, 0x02} //(7Eh)
+var RkRecord = []byte{0x7E, 0x02} // (7Eh)
 /*
 Excel uses an internal number type, called an RK number, to save memory and disk
 space.

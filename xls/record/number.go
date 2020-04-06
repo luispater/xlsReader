@@ -2,16 +2,15 @@ package record
 
 import (
 	"encoding/binary"
-	"github.com/shakinm/xlsReader/helpers"
+	"github.com/luispater/xlsReader/helpers"
 	"math"
 	"reflect"
-
 	"strconv"
 )
 
-//NUMBER: Cell Value, Floating-Point Number
+// NUMBER: Cell Value, Floating-Point Number
 
-var NumberRecord = []byte{0x03, 0x02} //(203h)
+var NumberRecord = []byte{0x03, 0x02} // (203h)
 /*
 A NUMBER record describes a cell containing a constant floating-point number. The
 rw field contains the 0-based row number. The col field contains the 0-based

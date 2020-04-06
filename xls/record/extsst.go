@@ -1,10 +1,10 @@
 package record
 
-import "github.com/shakinm/xlsReader/xls/structure"
+import "github.com/luispater/xlsReader/xls/structure"
 
-//EXTSST: Extended Shared String Table
+// EXTSST: Extended Shared String Table
 
-var ExtSstRecord = [2]byte{0xFF, 0x00} //(FFh)
+var ExtSstRecord = [2]byte{0xFF, 0x00} // (FFh)
 
 type ExtSST struct {
 	dsst      [2]byte
@@ -24,6 +24,6 @@ func (r *ExtSST) Read(stream []byte) {
 		copy(inf.Cb[:], stream[sPoint:sPoint+4])
 		copy(inf.Ib[:], stream[sPoint+4:sPoint+6])
 		copy(inf.Reserved[:], stream[sPoint+6:sPoint+8])
-		r.rgisstinf=append(r.rgisstinf, inf)
+		r.rgisstinf = append(r.rgisstinf, inf)
 	}
 }

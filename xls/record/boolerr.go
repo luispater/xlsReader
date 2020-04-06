@@ -1,12 +1,12 @@
 package record
 
 import (
-	"github.com/shakinm/xlsReader/helpers"
+	"github.com/luispater/xlsReader/helpers"
 	"reflect"
 	"strconv"
 )
 
-//BOOLERR: Cell Value, Boolean or Error
+// BOOLERR: Cell Value, Boolean or Error
 
 var BoolErrRecord = []byte{0x05, 0x02} // (205h)
 

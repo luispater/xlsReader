@@ -3,8 +3,8 @@ package xls
 import (
 	"bytes"
 	"errors"
-	"github.com/shakinm/xlsReader/helpers"
-	"github.com/shakinm/xlsReader/xls/record"
+	"github.com/luispater/xlsReader/helpers"
+	"github.com/luispater/xlsReader/xls/record"
 )
 
 // Workbook struct
@@ -39,7 +39,7 @@ func (wb *Workbook) GetSheet(sheetID int) (sheet *Sheet, err error) { // nolint:
 
 // GetXF -  Return Extended Format Record by index
 func (wb *Workbook) GetXFbyIndex(index int) record.XF {
-	if len(wb.xf)-1<index {
+	if len(wb.xf)-1 < index {
 		return wb.xf[15]
 	}
 	return wb.xf[index]
@@ -89,22 +89,22 @@ Next:
 		goto EIF
 	}
 
-	//BoundSheet
+	// BoundSheet
 
 	if bytes.Compare(recordNumber, record.BoundSheetRecord[:]) == 0 {
 		var bs record.BoundSheet
-		bs.Read(stream[sPoint+grbitOffset : sPoint+recordDataLength], wb.vers[:])
+		bs.Read(stream[sPoint+grbitOffset:sPoint+recordDataLength], wb.vers[:])
 		_ = wb.addSheet(&bs)
 		goto EIF
 	}
 
-	//Continue
+	// Continue
 	if bytes.Compare(recordNumber, record.ContinueRecord[:]) == 0 {
 
 		if SSTContinue {
 			readType = "continue"
 
-			if len(wb.sst.RgbSrc) == 0  {
+			if len(wb.sst.RgbSrc) == 0 {
 				grbitOffset = 0
 			} else {
 				grbitOffset = 1
@@ -118,7 +118,7 @@ Next:
 		goto EIF
 	}
 
-	//SST
+	// SST
 	if bytes.Compare(recordNumber, record.SSTRecord[:]) == 0 {
 		wb.sst.NewSST(stream[sPoint : sPoint+recordDataLength])
 
@@ -133,35 +133,35 @@ Next:
 	if bytes.Compare(recordNumber, record.XFRecord[:]) == 0 {
 		xf := new(record.XF)
 		xf.Read(stream[sPoint : sPoint+recordDataLength])
-		wb.xf=append(wb.xf, *xf)
+		wb.xf = append(wb.xf, *xf)
 		goto EIF
 	}
 
 	if bytes.Compare(recordNumber, record.FormatRecord[:]) == 0 {
 		format := new(record.Format)
 
-		format.Read(stream[sPoint : sPoint+recordDataLength], wb.vers[:])
+		format.Read(stream[sPoint:sPoint+recordDataLength], wb.vers[:])
 
-		if wb.formats==nil {
-			wb.formats = make(map[int]record.Format,0)
+		if wb.formats == nil {
+			wb.formats = make(map[int]record.Format, 0)
 		}
-		wb.formats[format.GetIndex()]=*format
+		wb.formats[format.GetIndex()] = *format
 		goto EIF
 	}
 
-	//CodePage
+	// CodePage
 	if bytes.Compare(recordNumber, record.CodePageRecord[:]) == 0 {
 		wb.codepage.Read(stream[sPoint : sPoint+recordDataLength])
 		goto EIF
 	}
 
-	//EOF
+	// EOF
 	if bytes.Compare(recordNumber, record.EOFRecord[:]) == 0 && recordDataLength == 0 {
 		eof = true
 	}
 
-	if bytes.Compare(recordNumber, record.BOFMARKS[:]) == 0   {
-		copy(wb.vers[:], stream[sPoint : sPoint+2])
+	if bytes.Compare(recordNumber, record.BOFMARKS[:]) == 0 {
+		copy(wb.vers[:], stream[sPoint:sPoint+2])
 		goto EIF
 	}
 

@@ -2,7 +2,7 @@ package record
 
 import "reflect"
 
-//Fake record
+// Fake record
 
 type FakeBlank struct {
 }
@@ -23,5 +23,5 @@ func (r *FakeBlank) GetType() string {
 }
 
 func (r *FakeBlank) GetXFIndex() int {
-	return 15 //The last record ( ixfe=15 ) is the default cell XF for the workbook.
+	return 15 // The last record ( ixfe=15 ) is the default cell XF for the workbook.
 }

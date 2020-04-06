@@ -1,7 +1,7 @@
 package record
 
 // CODEPAGE: Default Code Page
-var CodePageRecord = [2]byte{0x42, 0x00} //(42h)
+var CodePageRecord = [2]byte{0x42, 0x00} // (42h)
 
 /*
 The CODEPAGE record stores the default code page (character set) used when the
@@ -20,7 +20,6 @@ type CodePage struct {
 	cv [2]byte
 }
 
-
 func (r *CodePage) Read(stream []byte) {
-	copy(r.cv[:],stream[:])
+	copy(r.cv[:], stream[:])
 }

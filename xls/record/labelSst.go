@@ -1,13 +1,13 @@
 package record
 
 import (
-	"github.com/shakinm/xlsReader/helpers"
+	"github.com/luispater/xlsReader/helpers"
 	"reflect"
 )
 
-//LABELSST: Cell Value, String Constant/SST
+// LABELSST: Cell Value, String Constant/SST
 
-var LabelSStRecord = []byte{0xFD, 0x00} //(FDh)
+var LabelSStRecord = []byte{0xFD, 0x00} // (FDh)
 
 /*
 
@@ -57,9 +57,6 @@ func (r *LabelSSt) GetType() string {
 func (r *LabelSSt) GetXFIndex() int {
 	return int(helpers.BytesToUint16(r.ixfe[:]))
 }
-
-
-
 
 func (r *LabelSSt) Read(stream []byte, sst *SST) {
 	r.sst = sst

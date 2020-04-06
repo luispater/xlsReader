@@ -3,9 +3,9 @@ package xls
 import (
 	"bytes"
 	"errors"
-	"github.com/shakinm/xlsReader/helpers"
-	"github.com/shakinm/xlsReader/xls/record"
-	"github.com/shakinm/xlsReader/xls/structure"
+	"github.com/luispater/xlsReader/helpers"
+	"github.com/luispater/xlsReader/xls/record"
+	"github.com/luispater/xlsReader/xls/structure"
 )
 
 type rw struct {
@@ -27,10 +27,9 @@ func (s *Sheet) GetName() string {
 
 // Get row by index
 
-func (s *Sheet) GetRow(index int) (row *rw, err error) {
-
+func (s *Sheet) GetRow(index int) (*rw, error) {
 	if row, ok := s.rows[index]; ok {
-		return row, err
+		return row, nil
 	} else {
 		return row, errors.New("Out of range")
 	}
@@ -51,7 +50,7 @@ func (rw *rw) GetCols() (cols []structure.CellData) {
 
 	var maxColKey int
 
-	for k, _ := range rw.cols {
+	for k := range rw.cols {
 		if k > maxColKey {
 			maxColKey = k
 		}
@@ -82,13 +81,13 @@ func (s *Sheet) GetNumberRows() (n int) {
 
 	var maxRowKey int
 
-	for k, _ := range s.rows {
+	for k := range s.rows {
 		if k > maxRowKey {
 			maxRowKey = k
 		}
 	}
 
-	return maxRowKey+1
+	return maxRowKey + 1
 }
 
 func (s *Sheet) read(stream []byte) (err error) { // nolint: gocyclo
@@ -115,7 +114,7 @@ Next:
 
 	}
 
-	//LABELSST - String constant that uses BIFF8 shared string table (new to BIFF8)
+	// LABELSST - String constant that uses BIFF8 shared string table (new to BIFF8)
 	if bytes.Compare(recordNumber, record.LabelSStRecord[:]) == 0 {
 		c := new(record.LabelSSt)
 		c.Read(stream[sPoint:sPoint+recordDataLength], &s.wb.sst)
@@ -123,7 +122,7 @@ Next:
 		goto EIF
 	}
 
-	//LABEL - Cell Value, String Constant
+	// LABEL - Cell Value, String Constant
 	if bytes.Compare(recordNumber, record.LabelRecord[:]) == 0 {
 		if bytes.Compare(s.wb.vers[:], record.FlagBIFF8) == 0 {
 			c := new(record.LabelBIFF8)
@@ -139,16 +138,16 @@ Next:
 	}
 
 	if bytes.Compare(recordNumber, []byte{0xFD, 0x00}) == 0 {
-		//todo: сделать
+		// todo: сделать
 		goto EIF
 	}
 
-	//ARRAY - An array-entered formula
+	// ARRAY - An array-entered formula
 	if bytes.Compare(recordNumber, record.ArrayRecord[:]) == 0 {
-		//todo: сделать
+		// todo: сделать
 		goto EIF
 	}
-	//BLANK - An empty col
+	// BLANK - An empty col
 	if bytes.Compare(recordNumber, record.BlankRecord[:]) == 0 {
 		c := new(record.Blank)
 		c.Read(stream[sPoint : sPoint+recordDataLength])
@@ -156,7 +155,7 @@ Next:
 		goto EIF
 	}
 
-	//BOOLERR - A Boolean or error value
+	// BOOLERR - A Boolean or error value
 	if bytes.Compare(recordNumber, record.BoolErrRecord[:]) == 0 {
 		c := new(record.BoolErr)
 		c.Read(stream[sPoint : sPoint+recordDataLength])
@@ -164,13 +163,13 @@ Next:
 		goto EIF
 	}
 
-	//FORMULA - A col formula, stored as parse tokens
+	// FORMULA - A col formula, stored as parse tokens
 	if bytes.Compare(recordNumber, record.FormulaRecord[:]) == 0 {
-		//todo: сделать
+		// todo: сделать
 		goto EIF
 	}
 
-	//NUMBER  - An IEEE floating-point number
+	// NUMBER  - An IEEE floating-point number
 	if bytes.Compare(recordNumber, record.NumberRecord[:]) == 0 {
 		c := new(record.Number)
 		c.Read(stream[sPoint : sPoint+recordDataLength])
@@ -178,7 +177,7 @@ Next:
 		goto EIF
 	}
 
-	//MULBLANK - Multiple empty rows (new to BIFF5)
+	// MULBLANK - Multiple empty rows (new to BIFF5)
 	if bytes.Compare(recordNumber, record.MulBlankRecord[:]) == 0 {
 		c := new(record.MulBlank)
 		c.Read(stream[sPoint : sPoint+recordDataLength])
@@ -189,7 +188,7 @@ Next:
 		goto EIF
 	}
 
-	//RK - An RK number
+	// RK - An RK number
 	if bytes.Compare(recordNumber, record.RkRecord[:]) == 0 {
 		c := new(record.Rk)
 		c.Read(stream[sPoint : sPoint+recordDataLength])
@@ -197,7 +196,7 @@ Next:
 		goto EIF
 	}
 
-	//MULRK - Multiple RK numbers (new to BIFF5)
+	// MULRK - Multiple RK numbers (new to BIFF5)
 	if bytes.Compare(recordNumber, record.MulRKRecord[:]) == 0 {
 		c := new(record.MulRk)
 		c.Read(stream[sPoint : sPoint+recordDataLength])
@@ -209,30 +208,30 @@ Next:
 
 	}
 
-	//RSTRING - Cell with character formatting
+	// RSTRING - Cell with character formatting
 	if bytes.Compare(recordNumber, record.RStringRecord[:]) == 0 {
-		//todo: сделать
+		// todo: сделать
 		goto EIF
 	}
 
-	//SHRFMLA - A shared formula (new to BIFF5)
+	// SHRFMLA - A shared formula (new to BIFF5)
 	if bytes.Compare(recordNumber, record.SharedFormulaRecord[:]) == 0 {
-		//todo: сделать
+		// todo: сделать
 		goto EIF
 	}
 
-	//STRING - A string that represents the result of a formula
+	// STRING - A string that represents the result of a formula
 	if bytes.Compare(recordNumber, record.StringRecord[:]) == 0 {
-		//todo: сделать
+		// todo: сделать
 		goto EIF
 	}
 
 	if bytes.Compare(recordNumber, record.RowRecord[:]) == 0 {
-		//todo: сделать
+		// todo: сделать
 		goto EIF
 	}
 
-	//EOF
+	// EOF
 	if bytes.Compare(recordNumber, record.EOFRecord[:]) == 0 && recordDataLength == 0 {
 		eof = true
 	}
@@ -263,7 +262,7 @@ func (s *Sheet) addCell(cd structure.CellData, row [2]byte, column [2]byte) {
 	if _, ok := s.rows[r]; !ok {
 		s.rows[r] = new(rw)
 
-		if _, ok := s.rows[r].cols[c]; !ok {
+		if _, isOk := s.rows[r].cols[c]; !isOk {
 
 			colVal := map[int]structure.CellData{}
 			colVal[c] = cd

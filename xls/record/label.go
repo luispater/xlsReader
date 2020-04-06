@@ -1,16 +1,16 @@
 package record
 
 import (
-	"github.com/shakinm/xlsReader/helpers"
+	"github.com/luispater/xlsReader/helpers"
 	"golang.org/x/text/encoding/charmap"
 	"reflect"
 	"strings"
 	"unicode/utf16"
 )
 
-//LABEL: Cell Value, String Constant (204h)
+// LABEL: Cell Value, String Constant (204h)
 
-var LabelRecord = []byte{0x04, 0x02} //(204h)
+var LabelRecord = []byte{0x04, 0x02} // (204h)
 
 /*
 
@@ -38,12 +38,12 @@ type LabelBIFF8 struct {
 }
 
 type LabelBIFF5 struct {
-	rw   [2]byte
-	col  [2]byte
-	ixfe [2]byte
-	cch  [2]byte
+	rw    [2]byte
+	col   [2]byte
+	ixfe  [2]byte
+	cch   [2]byte
 	grbit [1]byte
-	rgb  []byte
+	rgb   []byte
 }
 
 func (r *LabelBIFF8) GetRow() [2]byte {
@@ -129,7 +129,7 @@ func (r *LabelBIFF5) Read(stream []byte) {
 	copy(r.col[:], stream[2:4])
 	copy(r.ixfe[:], stream[4:6])
 	copy(r.cch[:], stream[6:8])
-	//copy(r.grbit[:], stream[8:9])
+	// copy(r.grbit[:], stream[8:9])
 	r.rgb = make([]byte, helpers.BytesToUint16(r.cch[:]))
 	copy(r.rgb[:], stream[8:])
 }

@@ -14,6 +14,9 @@ func TestGetWorkBook(t *testing.T) {
 	}
 
 	s, err := wb.GetSheet(0)
+	if err != nil {
+		t.Error("Error: ", err)
+	}
 	cells, _ := s.GetRow(2)
 
 	for k := range cells.cols {
@@ -67,11 +70,11 @@ func TestGetWorkBook(t *testing.T) {
 				if c.GetString() != "TRUE" {
 					t.Error("Expected 'TRUE', got ", c.GetString())
 				}
-			case 10: //date
+			case 10: // date
 				if format.GetFormatString(c) != "9/3/19" {
 					t.Error("Expected '9/3/19', got ", format.GetFormatString(c))
 				}
-			case 11: //dateTime
+			case 11: // dateTime
 				if format.GetFormatString(c) != "09/03/2019 13:12:59" {
 					t.Error("Expected '09/03/2019 13:12:59', got ", format.GetFormatString(c))
 				}
@@ -101,19 +104,19 @@ func TestMiniFatWorkBook(t *testing.T) {
 		sheet, _ := wb.GetSheet(i)
 		if sheet.GetRows() != nil {
 			for _, row := range sheet.GetRows() {
-				if row  != nil {
+				if row != nil {
 
 					for _, col := range row.GetCols() {
 
-					//	fmt.Println(col.GetString())
+						//	fmt.Println(col.GetString())
 						xf := col.GetXFIndex()
-						//fmt.Println(xf)
+						// fmt.Println(xf)
 						style := wb.GetXFbyIndex(xf)
-						//fmt.Println(style)
+						// fmt.Println(style)
 						formatIdx := style.GetFormatIndex()
-						//fmt.Println(formatIdx)
+						// fmt.Println(formatIdx)
 						format := wb.GetFormatByIndex(formatIdx)
-						//fmt.Println(format)
+						// fmt.Println(format)
 
 						fstr := format.GetFormatString(col)
 						fmt.Println(fstr)

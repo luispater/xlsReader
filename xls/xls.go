@@ -2,7 +2,7 @@ package xls
 
 import (
 	"encoding/binary"
-	"github.com/shakinm/xlsReader/cfb"
+	"github.com/luispater/xlsReader/cfb"
 	"io"
 )
 
@@ -38,13 +38,56 @@ func OpenFile(fileName string) (workbook Workbook, err error) {
 	if book != nil {
 		size := binary.LittleEndian.Uint32(book.StreamSize[:])
 
-		reader, err := adaptor.OpenObject(book, root)
+		reader, errOpenObject := adaptor.OpenObject(book, root)
 
-		if err != nil {
-			return workbook, err
+		if errOpenObject != nil {
+			return workbook, errOpenObject
 		}
 
 		return readStream(reader, size)
+
+	}
+
+	return workbook, err
+}
+
+func OpenReader(reader io.ReadSeeker) (workbook Workbook, err error) {
+	adaptor, err := cfb.OpenReader(reader)
+
+	if err != nil {
+		return workbook, err
+	}
+
+	var book *cfb.Directory
+	var root *cfb.Directory
+	for _, dir := range adaptor.GetDirs() {
+		fn := dir.Name()
+
+		if fn == "Workbook" {
+			if book == nil {
+				book = dir
+			}
+		}
+		if fn == "Book" {
+			book = dir
+
+		}
+		if fn == "Root Entry" {
+			root = dir
+		}
+
+	}
+
+	if book != nil {
+		size := binary.LittleEndian.Uint32(book.StreamSize[:])
+
+		readerOpenObject, errOpenObject := adaptor.OpenObject(book, root)
+
+		if errOpenObject != nil {
+			return workbook, errOpenObject
+		}
+
+		return readStream(readerOpenObject, size)
 
 	}
 
@@ -61,11 +104,6 @@ func readStream(reader io.ReadSeeker, streamSize uint32) (workbook Workbook, err
 		return workbook, nil
 	}
 
-
-	if err != nil {
-		return workbook, nil
-	}
-
 	err = workbook.read(stream)
 
 	if err != nil {
@@ -73,9 +111,9 @@ func readStream(reader io.ReadSeeker, streamSize uint32) (workbook Workbook, err
 	}
 
 	for k := range workbook.sheets {
-		sheet, err := workbook.GetSheet(k)
+		sheet, errGetSheet := workbook.GetSheet(k)
 
-		if err != nil {
+		if errGetSheet != nil {
 			return workbook, nil
 		}
 

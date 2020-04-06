@@ -1,10 +1,10 @@
 package record
 
-import "github.com/shakinm/xlsReader/helpers"
+import "github.com/luispater/xlsReader/helpers"
 
-//AUTOFILTERINFO: Drop-Down Arrow Count
+// AUTOFILTERINFO: Drop-Down Arrow Count
 
-var AutofilterInfoRecord = [2]byte{0x9D, 0x00} //(9Dh)
+var AutofilterInfoRecord = [2]byte{0x9D, 0x00} // (9Dh)
 
 /*
 This record stores the count of AutoFilter drop-down arrows. Each drop-down arrow

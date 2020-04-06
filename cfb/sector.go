@@ -48,7 +48,7 @@ func (s *Sector) getFATSectorLocations() []byte {
 }
 
 func (s *Sector) getMiniFatFATSectorLocations() []byte {
-	return s.Data[0 : s.SectorSize]
+	return s.Data[0:s.SectorSize]
 }
 
 func (s *Sector) getNextDIFATSectorLocation() []byte {
@@ -72,14 +72,13 @@ func NewMiniFatSector(header *Header) Sector {
 	}
 }
 
+func (s *Sector) values(length int) (res []uint32) {
 
-func (s *Sector) values(length int) (res []uint32 ) {
-
-	  res = make([]uint32, length)
+	res = make([]uint32, length)
 
 	buf := bytes.NewBuffer(s.Data)
 
-	 _ = binary.Read(buf, binary.LittleEndian, res) // nolint: gosec
+	_ = binary.Read(buf, binary.LittleEndian, res) // nolint: gosec
 
 	return res
 }

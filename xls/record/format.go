@@ -3,16 +3,16 @@ package record
 import (
 	"bytes"
 	"fmt"
+	"github.com/luispater/xlsReader/helpers"
+	"github.com/luispater/xlsReader/xls/structure"
 	"github.com/metakeule/fmtdate"
-	"github.com/shakinm/xlsReader/helpers"
-	"github.com/shakinm/xlsReader/xls/structure"
 	"strconv"
 	"strings"
 )
 
-//FORMAT: Number Format
+// FORMAT: Number Format
 
-var FormatRecord = []byte{0x1E, 0x04} //(41Eh)
+var FormatRecord = []byte{0x1E, 0x04} // (41Eh)
 
 /*
 The FORMAT record describes a number format in the workbook.

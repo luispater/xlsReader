@@ -1,7 +1,7 @@
 package structure
 
 import (
-	"github.com/shakinm/xlsReader/helpers"
+	"github.com/luispater/xlsReader/helpers"
 	"math"
 	"strconv"
 )
@@ -28,7 +28,7 @@ func (r *RKNum) number() (intNum int64, floatNum float64, isFloat bool) {
 		isFloat = true
 	}
 
-	return int64(val), float64(fn), isFloat
+	return int64(val), fn, isFloat
 }
 
 func (r *RKNum) GetFloat() (fn float64) {
@@ -36,7 +36,7 @@ func (r *RKNum) GetFloat() (fn float64) {
 	if isFloat {
 		fn = f
 	} else {
-		fn=float64(i)
+		fn = float64(i)
 	}
 	return fn
 }

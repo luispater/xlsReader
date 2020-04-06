@@ -1,7 +1,7 @@
 package record
 
 // CONTINUE: Continues Long Records
-var ContinueRecord = [2]byte{0x3c, 0x00} //(0x3c)
+var ContinueRecord = [2]byte{0x3c, 0x00} // (0x3c)
 
 /*
 Records longer than 8,228 bytes (2,084 bytes in BIFF7 and earlier) must be split into

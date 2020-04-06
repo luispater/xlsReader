@@ -1,8 +1,8 @@
 package record
 
-import "github.com/shakinm/xlsReader/helpers"
+import "github.com/luispater/xlsReader/helpers"
 
-//INDEX: Index Record
+// INDEX: Index Record
 
 var IndexRecord = [2]byte{0x02, 0x0B} // (20Bh)
 

@@ -1,7 +1,7 @@
 package structure
 
 import (
-	"github.com/shakinm/xlsReader/helpers"
+	"github.com/luispater/xlsReader/helpers"
 	"unicode/utf16"
 )
 
@@ -42,7 +42,7 @@ func (s *XLUnicodeRichExtendedString) Read(stream []byte) {
 
 	copy(s.Cch[:], stream[iOft(&oft, 0):iOft(&oft, 2)])
 
-	//offset 2
+	// offset 2
 	s.FHighByte = stream[iOft(&oft, 0):iOft(&oft, 1)][0]
 
 	if s.FHighByte&1 == 1 {
@@ -58,12 +58,12 @@ func (s *XLUnicodeRichExtendedString) Read(stream []byte) {
 		copy(s.CRun[:], stream[iOft(&oft, 0):iOft(&oft, 2)])
 	}
 
-	if s.FHighByte>>2&1 == 1 { //fExtSt  == 1
-		//offset 4
+	if s.FHighByte>>2&1 == 1 { // fExtSt  == 1
+		// offset 4
 		copy(s.CbExtRst[:], stream[iOft(&oft, 0):iOft(&oft, 4)])
 	}
 
-	//offset rgbSize
+	// offset rgbSize
 	s.Rgb = make([]byte, uint32(rgbSize))
 	copy(s.Rgb[0:], stream[iOft(&oft, 0):iOft(&oft, uint32(rgbSize))])
 
@@ -77,7 +77,7 @@ func (s *XLUnicodeRichExtendedString) Read(stream []byte) {
 		}
 	}
 
-	if s.FHighByte>>2&1 == 1 { //fExtSt  == 1
+	if s.FHighByte>>2&1 == 1 { // fExtSt  == 1
 		copy(s.ExtRst.Reserved[:], stream[iOft(&oft, 0):iOft(&oft, 2)])
 		copy(s.ExtRst.Cb[:], stream[iOft(&oft, 0):iOft(&oft, 2)])
 
@@ -94,7 +94,7 @@ func (s *XLUnicodeRichExtendedString) Read(stream []byte) {
 			s.ExtRst.Rphssub.St.RgchData = append(s.ExtRst.Rphssub.St.RgchData, stream[iOft(&oft, 0):iOft(&oft, 2)]...)
 		}
 
-		//The number of elements in this array is rphssub.crun
+		// The number of elements in this array is rphssub.crun
 		phRunsSizeL := helpers.BytesToUint16(s.ExtRst.Rphssub.Crun[:])
 		if phRunsSizeL > 0 {
 			for i := uint16(0); i <= phRunsSizeL; i++ {

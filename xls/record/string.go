@@ -22,5 +22,4 @@ type String struct {
 	Cch   [2]byte
 	Grbit [2]byte
 	Rgch  []byte
-
 }
